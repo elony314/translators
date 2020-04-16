@@ -36,7 +36,7 @@
 */
 
 
-// attr()/text() v2
+// attr()/text() v2, https://github.com/zotero/translators/issues/1277
 // eslint-disable-next-line
 function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
@@ -48,7 +48,7 @@ function detectWeb(doc, url) {
 	Zotero.monitorDOMChanges(doc.querySelector('.main'));
 
 	if (url.includes('/paper/')) {
-		var type = attr('ma-entity-detail-info i.icon-paper, ma-entity-detail-info i.icon-primary_paper', 'title');
+		var type = attr('div.name-section div.name i.icon-paper, div.name-section div.name i.icon-primary_paper', 'title');
 		if (type) {
 			type = type.toLowerCase().replace(/[^a-z]/g, '');
 			if (type == "book") {
@@ -208,7 +208,7 @@ function scrapeJson(text) {
 	*/
 
 	// add pdf
-	let pdfurl_nodes = document.evaluate("//div[@class='listTitle au-target' and text()='View PDF:']/following-sibling::a[@class='ma-link-collection-item au-target']", document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
+	let pdfurl_nodes = document.evaluate("//div[@class='list-title au-target' and text()='View PDF:']/following-sibling::a[@class='ma-link-collection-item au-target']", document, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
 
 	for (const i of Array(pdfurl_nodes.snapshotLength).keys()){
 		item.attachments.push({
