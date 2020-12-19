@@ -48,9 +48,9 @@ function detectWeb(doc, url) {
 	Zotero.monitorDOMChanges(doc.querySelector('.main'));
 
 	if (url.includes('/paper/')) {
-		var type = attr('div.name-section div.name i.icon-paper, div.name-section div.name i.icon-primary_paper', 'title');
+		var type = attr('div.name-section h1.name i.icon-paper, div.name-section h1.name i.icon-primary_paper, div.name-section h1.name i.icon-paper_family', 'title');
 		if (type) {
-			type = type.toLowerCase().replace(/[^a-z]/g, '');
+			type = type.toLowerCase().replace(/[^a-z]/g, '').replace('titleicon', '');
 			if (type == "book") {
 				return 'book';
 			}
@@ -212,7 +212,7 @@ function scrapeJson(text) {
 
 	for (const i of Array(pdfurl_nodes.snapshotLength).keys()){
 		item.attachments.push({
-			title: pdfurl_nodes.snapshotItem(i).textContent.trim().replace(/,$/g, ""),
+			title: pdfurl_nodes.snapshotItem(i).textContent.trim().replace(/\s\|$/g,""),
 			mimeType:"application/pdf",
 			url:pdfurl_nodes.snapshotItem(i).href
 		});	
